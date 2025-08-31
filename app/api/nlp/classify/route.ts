@@ -1,8 +1,8 @@
-/* NLP classification endpoint using Grok via AI SDK */
+/* NLP classification endpoint using OpenAI via AI SDK */
 import { NextResponse } from "next/server"
 import { z } from "zod"
 import { generateObject } from "ai"
-import { xai } from "@ai-sdk/xai"
+import { openai } from "@ai-sdk/openai"
 
 const InputSchema = z.object({
   text: z.string().min(1),
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     const { text, hintLanguage } = InputSchema.parse(body)
 
     const { object } = await generateObject({
-      model: xai("grok-4"),
+      model: openai("gpt-4o-mini"),
       schema: OutputSchema,
       prompt: `
 You are a hazard post classifier for emergency management. 
