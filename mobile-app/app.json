@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Crowd Reporting",
+    "slug": "crowd-reporting",
+    "scheme": "crowdreporting",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "We use the camera to capture photos and videos for hazard reports.",
+        "NSPhotoLibraryUsageDescription": "We access your photo library so you can attach media to hazard reports.",
+        "NSLocationWhenInUseUsageDescription": "We use your location to include precise coordinates with your report."
+      }
+    },
+    "android": {
+      "adaptiveIcon": { "foregroundImage": "./assets/adaptive-icon.png", "backgroundColor": "#ffffff" },
+      "permissions": ["ACCESS_FINE_LOCATION", "CAMERA", "READ_EXTERNAL_STORAGE", "READ_MEDIA_IMAGES"],
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_ANDROID_GOOGLE_MAPS_API_KEY"
+        }
+      }
+    },
+    "web": { "bundler": "metro", "output": "static" },
+    "extra": {
+      "apiUrl": "https://your-deployed-web-app.example.com"
+    }
+  }
+}
