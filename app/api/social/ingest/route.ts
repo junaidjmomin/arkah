@@ -1,8 +1,8 @@
-/* social ingestion endpoint: classify via Grok and upsert to Supabase, optionally index to Upstash Search */
+/* social ingestion endpoint: classify via OpenAI and upsert to Supabase, optionally index to Upstash Search */
 import { NextResponse } from "next/server"
 import { z } from "zod"
 import { generateObject } from "ai"
-import { xai } from "@ai-sdk/xai"
+import { openai } from "@ai-sdk/openai"
 import { getServiceSupabase } from "@/lib/supabase"
 import { indexSocialDocuments } from "@/lib/search"
 
@@ -31,7 +31,7 @@ const ClassSchema = z.object({
 
 async function classifyOne(text: string, hintLanguage?: string) {
   const { object } = await generateObject({
-    model: xai("grok-4"),
+    model: openai("gpt-4o-mini"),
     schema: ClassSchema,
     prompt: `
 Hazard post classification for emergency management.
