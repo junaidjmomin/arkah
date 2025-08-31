@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
   // Simple pass-through middleware
-  // Supabase auth will be handled in API routes and server components
+  // Supabase auth is handled in API routes and server components
   return NextResponse.next()
 }
 
