@@ -1,45 +1,10 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@supabase/ssr"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-export async function updateSession(request: NextRequest) {
-  // Clone headers so we can pass modified cookies to the Next.js response
-  const requestHeaders = new Headers(request.headers)
-
-  // Create response early to collect Set-Cookie headers
-  const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  })
-
-  // Initialize Supabase server client with cookie handlers
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value
-        },
-        set(name: string, value: string, options: any) {
-          // Ensure cookies set by Supabase are propagated to the response
-          response.cookies.set({ name, value, ...options })
-        },
-        remove(name: string, options: any) {
-          response.cookies.set({ name, value: "", ...options })
-        },
-      },
-    },
-  )
-
-  // Touch the session so Supabase can refresh tokens if needed
-  await supabase.auth.getSession()
-
-  return response
-}
-
-export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+export function middleware(request: NextRequest) {
+  // Simple pass-through middleware for now
+  // Supabase auth will be handled in API routes and server components
+  return NextResponse.next()
 }
 
 export const config = {
